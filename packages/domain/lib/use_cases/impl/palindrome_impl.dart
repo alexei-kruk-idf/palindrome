@@ -1,4 +1,4 @@
-import 'package:palindrome/domain/use_cases/interfaces/palindrome_case.dart';
+import '../interfaces/palindrome_case.dart';
 
 class PalindromeCaseImpl extends PalindromeCase {
   @override

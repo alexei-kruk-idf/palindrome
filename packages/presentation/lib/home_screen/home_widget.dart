@@ -1,5 +1,5 @@
+import 'package:domain/use_cases/impl/palindrome_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:palindrome/domain/use_cases/impl/palindrome_impl.dart';
 
 class HomeWidget extends StatefulWidget {
   HomeWidget({Key? key}) : super(key: key);
