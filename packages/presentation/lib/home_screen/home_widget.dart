@@ -10,7 +10,7 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   final palindromeCaseImpl = PalindromeCaseImpl();
-  String isPalindrome = "";
+  String textResult = "";
   String myText = "";
 
   @override
@@ -33,15 +33,15 @@ class _HomeWidgetState extends State<HomeWidget> {
               final result = palindromeCaseImpl.isPalindrome(myText);
               myText = myText.trim();
               if (result) {
-                isPalindrome = "Это палиндром";
+                textResult = "Это палиндром";
               } else {
-                isPalindrome = "Это не палиндром";
+                textResult = "Это не палиндром";
               }
             });
           },
           child: const Text("Проверить строку"),
         ),
-        Text(isPalindrome)
+        Text(textResult)
       ]),
       appBar: AppBar(title: const Text("Palindrome")),
     ));
