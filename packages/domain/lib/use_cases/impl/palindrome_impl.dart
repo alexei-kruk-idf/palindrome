@@ -2,12 +2,12 @@ import '../interfaces/palindrome_case.dart';
 
 class PalindromeCaseImpl extends PalindromeCase {
   @override
-  bool isPalindrome(String text) {
+  Future<bool> call(String text) async {
     text = text.trim();
     if (text == text.split('').reversed.join('') && text != "") {
-      return true;
+      return Future.value(true);
     } else {
-      return false;
+      return Future.value(false);
     }
   }
 }

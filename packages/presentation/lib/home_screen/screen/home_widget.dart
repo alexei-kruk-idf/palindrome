@@ -1,5 +1,6 @@
 import 'package:domain/use_cases/impl/palindrome_impl.dart';
 import 'package:flutter/material.dart';
+import 'package:presentation/home_screen/bloc/palindrome_bloc.dart';
 
 class HomeWidget extends StatefulWidget {
   HomeWidget({Key? key}) : super(key: key);
@@ -9,9 +10,23 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  final palindromeCaseImpl = PalindromeCaseImpl();
+  final palindromeBlock = PalindromeBlock(PalindromeCaseImpl());
   String textResult = "";
   String myText = "";
+
+  void _isPalindrome() {
+    palindromeBlock.inputStreamSink.add(myText);
+  }
+
+  void _onChangedText(String text) {
+    myText = text;
+  }
+
+  @override
+  void dispose() {
+    palindromeBlock.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,29 +34,25 @@ class _HomeWidgetState extends State<HomeWidget> {
         home: Scaffold(
       body: Column(children: [
         TextField(
-            onChanged: (text) {
-              myText = text.toString();
-            },
+            onChanged: _onChangedText,
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 hintText: "Введите строку",
                 fillColor: Colors.black12,
                 filled: true)),
         ElevatedButton(
-          onPressed: () {
-            setState(() {
-              final result = palindromeCaseImpl.isPalindrome(myText);
-              myText = myText.trim();
-              if (result) {
-                textResult = "Это палиндром";
-              } else {
-                textResult = "Это не палиндром";
-              }
-            });
-          },
+          onPressed: _isPalindrome,
           child: const Text("Проверить строку"),
         ),
-        Text(textResult)
+        StreamBuilder(
+            stream: palindromeBlock.outputStreamSink,
+            builder: (context, snapshot) {
+              if (snapshot.data != null) {
+                return Text(snapshot.data as String);
+              } else {
+                return Text('');
+              }
+            })
       ]),
       appBar: AppBar(title: const Text("Palindrome")),
     ));
