@@ -20,8 +20,8 @@ class PalindromeBlock {
     _outputStreamController.close();
   }
 
-  void _checkPalindrome(String text) async {
-    final isPalindrome = await _palindromeUseCase(text);
+  void _checkPalindrome(String text) {
+    final isPalindrome = _palindromeUseCase(text);
     var textResult = text.trim();
     if (isPalindrome) {
       textResult = "Это палиндром";
