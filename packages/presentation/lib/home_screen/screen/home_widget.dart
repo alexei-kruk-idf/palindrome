@@ -14,7 +14,7 @@ class _HomeWidgetState extends State<HomeWidget> {
   String textResult = "";
   String myText = "";
 
-  void _isPalindrome() {
+  void _checkPalindrome() {
     palindromeBlock.inputStreamSink.add(myText);
   }
 
@@ -41,7 +41,7 @@ class _HomeWidgetState extends State<HomeWidget> {
                 fillColor: Colors.black12,
                 filled: true)),
         ElevatedButton(
-          onPressed: _isPalindrome,
+          onPressed: _checkPalindrome,
           child: const Text("Проверить строку"),
         ),
         StreamBuilder(
