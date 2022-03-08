@@ -1,3 +1,3 @@
 abstract class PalindromeCase {
-  bool isPalindrome(String text);
+  bool call(String text);
 }
