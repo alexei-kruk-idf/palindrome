@@ -10,12 +10,12 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  final palindromeBlock = PalindromeBlock(PalindromeCaseImpl());
+  final palindromeBloc = PalindromeBloc(PalindromeCaseImpl());
   String textResult = "";
   String myText = "";
 
   void _checkPalindrome() {
-    palindromeBlock.inputStreamSink.add(myText);
+    palindromeBloc.checkPalindrome(myText);
   }
 
   void _onChangedText(String text) {
@@ -24,7 +24,7 @@ class _HomeWidgetState extends State<HomeWidget> {
 
   @override
   void dispose() {
-    palindromeBlock.dispose();
+    palindromeBloc.dispose();
     super.dispose();
   }
 
@@ -45,7 +45,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: const Text("Проверить строку"),
         ),
         StreamBuilder(
-            stream: palindromeBlock.outputStreamSink,
+            stream: palindromeBloc.outputStreamSink,
             builder: (context, snapshot) {
               if (snapshot.data != null) {
                 return Text(snapshot.data as String);
