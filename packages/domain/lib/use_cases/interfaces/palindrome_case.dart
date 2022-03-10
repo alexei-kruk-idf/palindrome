@@ -1,3 +1,3 @@
-abstract class PalindromeCase {
-  bool call(String text);
+abstract class PalindromeCase<P, R> {
+  R call(P text);
 }

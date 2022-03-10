@@ -1,30 +1,32 @@
 import 'package:domain/use_cases/impl/palindrome_impl.dart';
 import 'package:flutter/material.dart';
-import 'package:presentation/home_screen/bloc/palindrome_bloc.dart';
+import 'package:presentation/home_screen/bloc/base/bloc_data.dart';
+import 'package:presentation/home_screen/bloc/home_bloc.dart';
+import 'package:presentation/home_screen/bloc/home_data.dart';
 
 class HomeWidget extends StatefulWidget {
-  HomeWidget({Key? key}) : super(key: key);
+  const HomeWidget({Key? key}) : super(key: key);
 
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  final palindromeBloc = PalindromeBloc(PalindromeCaseImpl());
+  final homeBloc = HomeBloc(PalindromeCaseImpl());
   String textResult = "";
   String myText = "";
 
   void _checkPalindrome() {
-    palindromeBloc.checkPalindrome(myText);
+    homeBloc.checkPalindrome();
   }
 
   void _onChangedText(String text) {
-    myText = text;
+    homeBloc.textPalindrome = text;
   }
 
   @override
   void dispose() {
-    palindromeBloc.dispose();
+    homeBloc.dispose();
     super.dispose();
   }
 
@@ -45,12 +47,22 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: const Text("Проверить строку"),
         ),
         StreamBuilder(
-            stream: palindromeBloc.outputStreamSink,
+            stream: homeBloc.dataStream,
+            initialData: BlocData.init(),
             builder: (context, snapshot) {
-              if (snapshot.data != null) {
-                return Text(snapshot.data as String);
+              final screenData = snapshot.data;
+              if (screenData is BlocData) {
+                if (screenData.isLoading) {
+                  return const CircularProgressIndicator();
+                } else if (screenData.data is HomeData) {
+                  return Text(screenData.data.isPalindrome
+                      ? 'Это палиндром'
+                      : 'Это не палиндром');
+                } else {
+                  return const Text('');
+                }
               } else {
-                return Text('');
+                return const Text('');
               }
             })
       ]),

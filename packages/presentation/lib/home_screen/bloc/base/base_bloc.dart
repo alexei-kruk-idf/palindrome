@@ -11,7 +11,7 @@ abstract class BaseBloc<D> {
   void dispose();
 }
 
-class BlocIml<D> implements BaseBloc<D> {
+class BaseBlocIml<D> implements BaseBloc<D> {
   @override
   Stream<BlocData<D?>> get dataStream => _data.stream;
   final _blocData = BlocData.init();
@@ -25,7 +25,6 @@ class BlocIml<D> implements BaseBloc<D> {
   @protected
   void handleData({
     bool? isLoading,
-    bool? isValid,
     D? data,
   }) {
     if (!_data.isClosed) {
