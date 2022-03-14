@@ -17,18 +17,24 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  late final Dio _dio = dioBuilder(ApiPath.getBaseUrlPalindrome());
-  late final ApiService _apiService = ApiService(
-    _dio,
-  );
-  late final CancelToken _cancelToken = CancelToken();
-  late final NetworkRepository _palindromeRepository =
-      NetworkRepository(_apiService, _cancelToken);
-  late final HomeBloc _homeBloc =
-      HomeBloc(PalindromeCaseImpl(_palindromeRepository));
+  late final Dio _dio;
+  late final ApiService _apiService;
+  late final CancelToken _cancelToken;
+  late final NetworkRepository _palindromeRepository;
+  late final HomeBloc _homeBloc;
 
   String textResult = "";
   String myText = "";
+
+  _HomeWidgetState() {
+    _dio = dioBuilder(ApiPath.getBaseUrlPalindrome());
+    _apiService = ApiService(
+      _dio,
+    );
+    _cancelToken = CancelToken();
+    _palindromeRepository = NetworkRepository(_apiService, _cancelToken);
+    _homeBloc = HomeBloc(PalindromeCaseImpl(_palindromeRepository));
+  }
 
   void _checkPalindrome() {
     _homeBloc.checkPalindrome();
