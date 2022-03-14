@@ -8,5 +8,6 @@ Future<void> initPresentationModule() async {
 
 void _initHomeScreenModule() {
   GetIt.I.registerFactory<HomeBloc>(
-      () => HomeBloc(GetIt.I.get<PalindromeCaseImpl>()));
+    () => HomeBloc(GetIt.I.get<PalindromeCaseImpl>()),
+  );
 }

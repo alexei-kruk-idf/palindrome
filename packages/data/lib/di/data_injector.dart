@@ -14,12 +14,15 @@ Future<void> initDataModule() async {
 
 void _initApiServiceModule() {
   GetIt.I.registerSingleton(
-      ApiService(GetIt.I.get(instanceName: 'palindrome_url')));
+    ApiService(GetIt.I.get(instanceName: 'palindrome_url')),
+  );
 }
 
 void _initDioModule() {
-  GetIt.I.registerSingleton(dioBuilder('https://fpwebservice.herokuapp.com'),
-      instanceName: 'palindrome_url');
+  GetIt.I.registerSingleton(
+    dioBuilder('https://fpwebservice.herokuapp.com'),
+    instanceName: 'palindrome_url',
+  );
 }
 
 void _initCancelToken() {
@@ -27,8 +30,10 @@ void _initCancelToken() {
 }
 
 void _initRepositoryModule() {
-  GetIt.I.registerSingleton<INetworkRepository>(NetworkRepository(
-    GetIt.I.get<ApiService>(),
-    GetIt.I.get<CancelToken>(),
-  ));
+  GetIt.I.registerSingleton<INetworkRepository>(
+    NetworkRepository(
+      GetIt.I.get<ApiService>(),
+      GetIt.I.get<CancelToken>(),
+    ),
+  );
 }

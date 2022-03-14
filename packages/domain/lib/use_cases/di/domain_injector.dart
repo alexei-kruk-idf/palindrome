@@ -8,5 +8,6 @@ Future<void> initDomainModule() async {
 
 void _initUseCaseModule() {
   GetIt.I.registerSingleton<PalindromeCaseImpl>(
-      PalindromeCaseImpl(GetIt.I.get<INetworkRepository>()));
+    PalindromeCaseImpl(GetIt.I.get<INetworkRepository>()),
+  );
 }
