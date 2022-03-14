@@ -1,3 +1,4 @@
+import 'package:data/helper/api_path.dart';
 import 'package:data/service/api_service.dart';
 import 'package:dio/dio.dart';
 import 'package:domain/use_cases/model/palindrome_response.dart';
@@ -19,7 +20,7 @@ class NetworkRepository extends ApiBaseRepositoryImpl
   Future<PalindromeResponse> checkPalindrome(String palindrome) {
     return _service
         .get(
-          path: '/ispalindrome/$palindrome',
+          path: ApiPath.getPathUrlPalindrome(palindrome),
           cancelToken: _cancelToken,
         )
         .then((value) => Future.value(PalindromeResponse.fromJson(value.data)));
