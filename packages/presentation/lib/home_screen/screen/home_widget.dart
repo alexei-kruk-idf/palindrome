@@ -1,10 +1,3 @@
-
-import 'package:data/dio/dio_builder.dart';
-import 'package:data/helper/api_path.dart';
-import 'package:data/repository/network_repository.dart';
-import 'package:data/service/api_service.dart';
-import 'package:dio/dio.dart';
-import 'package:domain/use_cases/impl/palindrome_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/home_screen/bloc/base/bloc_data.dart';
 import 'package:presentation/home_screen/bloc/bloc_state.dart';
@@ -17,7 +10,6 @@ class HomeWidget extends StatefulWidget {
   @override
   State<HomeWidget> createState() => _HomeWidgetState();
 }
-
 
 class _HomeWidgetState extends BlocState<HomeWidget, HomeBloc> {
   String textResult = "";
