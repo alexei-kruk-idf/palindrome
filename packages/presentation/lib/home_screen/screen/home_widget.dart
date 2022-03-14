@@ -1,3 +1,8 @@
+import 'package:data/dio/dio_builder.dart';
+import 'package:data/helper/api_path.dart';
+import 'package:data/repository/network_repository.dart';
+import 'package:data/service/api_service.dart';
+import 'package:dio/dio.dart';
 import 'package:domain/use_cases/impl/palindrome_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:presentation/home_screen/bloc/base/bloc_data.dart';
@@ -12,21 +17,36 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
-  final homeBloc = HomeBloc(PalindromeCaseImpl());
+  late final Dio _dio;
+  late final ApiService _apiService;
+  late final CancelToken _cancelToken;
+  late final NetworkRepository _palindromeRepository;
+  late final HomeBloc _homeBloc;
+
   String textResult = "";
   String myText = "";
 
+  _HomeWidgetState() {
+    _dio = dioBuilder(ApiPath.getBaseUrlPalindrome());
+    _apiService = ApiService(
+      _dio,
+    );
+    _cancelToken = CancelToken();
+    _palindromeRepository = NetworkRepository(_apiService, _cancelToken);
+    _homeBloc = HomeBloc(PalindromeCaseImpl(_palindromeRepository));
+  }
+
   void _checkPalindrome() {
-    homeBloc.checkPalindrome();
+    _homeBloc.checkPalindrome();
   }
 
   void _onChangedText(String text) {
-    homeBloc.textPalindrome = text;
+    _homeBloc.textPalindrome = text;
   }
 
   @override
   void dispose() {
-    homeBloc.dispose();
+    _homeBloc.dispose();
     super.dispose();
   }
 
@@ -47,7 +67,7 @@ class _HomeWidgetState extends State<HomeWidget> {
           child: const Text("Проверить строку"),
         ),
         StreamBuilder(
-            stream: homeBloc.dataStream,
+            stream: _homeBloc.dataStream,
             initialData: BlocData.init(),
             builder: (context, snapshot) {
               final screenData = snapshot.data;
